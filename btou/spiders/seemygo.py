@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from btou.items import BtouItem
+import re
 
 class SeemygoSpider(scrapy.Spider):
     name = 'seemygo'
@@ -15,11 +16,15 @@ class SeemygoSpider(scrapy.Spider):
         items = []
 	for each in response.xpath("//li[@class='t']"):
 	#for each in response.xpath("//li[contains(@class,'t')]/@class"):
-	 print(each.extract())
+	 #print(each.extract())
 	 item = BtouItem()
 	 item['name'] = each.xpath("h1/em/text()").extract()
 	 item['level'] = each.xpath("h1/span/text()").extract()
-	 item['info']  = each.xpath("span/p/text()").extract()
+	 #item['info']  = each.xpath("span/p/text()").extract()
+	 infoArray  = each.xpath("span").re_first(r'>.+<')
+	 test = re.sub(r'<.*?>|<|>','',infoArray)
+	 print(test)
+	 item['info'] = test
 	 info = each.xpath("span/p/text()").extract()
 	 if not info:
 	 # print("这里为空啊~~~~~~~~,请你自己采取措施！！")
