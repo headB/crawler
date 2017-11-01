@@ -23,7 +23,6 @@ class SeemygoSpider(scrapy.Spider):
 	 #item['info']  = each.xpath("span/p/text()").extract()
 	 infoArray  = each.xpath("span").re_first(r'>.+<')
 	 test = re.sub(r'<.*?>|<|>','',infoArray)
-	 print(test)
 	 item['info'] = test
 	 info = each.xpath("span/p/text()").extract()
 	 if not info:
