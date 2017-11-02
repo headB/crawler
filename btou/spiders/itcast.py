@@ -9,12 +9,14 @@ class ItcastSpider(CrawlSpider):
  
    def parse_item(self,response):
 
-	#for page in response:
+	#for page in response.body:
 	# title = page.xpath("//title").extract()
 	# print(title)
 
-        titles = response.xpath("//title")
-	for title in titles:
-	 items = ItcastItem()
-	 items['title'] = title.xpath('text()').extract()
-	 return items
+        titles = response.xpath("/html").re("title.+<")
+	print(titles)
+	
+	#for title in titles:
+	# items = ItcastItem()
+	# items['title'] = title.xpath('text()').extract()
+	# return items
