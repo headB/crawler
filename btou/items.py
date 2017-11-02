@@ -13,4 +13,9 @@ class BtouItem(scrapy.Item):
      name = scrapy.Field()
      level= scrapy.Field()
      info = scrapy.Field()
-    
+
+class ItcastItem(scrapy.Item):
+    title = scrapy.Field()    
+    h1 = scrapy.Field()    
+    h2 = scrapy.Field()    
+    h3 = scrapy.Field()    
