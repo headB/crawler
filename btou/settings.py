@@ -21,6 +21,17 @@ NEWSPIDER_MODULE = 'btou.spiders'
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
 
+MYSQL_HOST = '192.168.113.2'
+MYSQL_DBNAME = 'crawl'
+MYSQL_USER = 'crawl'
+MYSQL_PASSWD ='kumanxuan123!'
+MYSQL_PORT = 3306
+
+ITEM_PIPELINES = {
+    'btou.pipelines.BtouPipeline': 300,
+    #'btou.pipelines.JsonWithEncodingPipeline': 300,
+}
+
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
 
