@@ -5,38 +5,53 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
+import pymysql
+
+def dbhandle():
+      conn = pymysql.connect(
+        host='192.168.113.2',
+        user='crawl',
+        db='crawl',
+        password='kumanxuan123!',
+        charset='utf8',
+        #use_unicode=False
+        )
+      return conn
+
+
 
 class BtouPipeline(object):
 
-    def __init__(self,dpool):
-      self.dpool = dpool
+    #def __init__(self,dpool):
+    #  self.dpool = dpool
 
 
-    def from_settings(cls,settings):
-     dbparams=dict(
-            host=settings['MYSQL_HOST'],
-            db=settings['MYSQL_DBNAME'],
-            user=settings['MYSQL_USER'],
-            passwd=settings['MYSQL_PASSWD'],
-            charset='utf8',
-            cursorclass=MySQLdb.cursors.DictCursor,
-            use_unicode=False,
-        )
-     dbpool=adbapi.ConnectionPool('MySQLdb',**dbparams)
-     return cls(dbpool)
-
-
+    #def from_settings(cls,settings):
+    # dbparams=dict(
+    #        host=settings['MYSQL_HOST'],
+    #        db=settings['MYSQL_DBNAME'],
+    #        user=settings['MYSQL_USER'],
+    #        passwd=settings['MYSQL_PASSWD'],
+    #        charset='utf8',
+    #        cursorclass=MySQLdb.cursors.DictCursor,
+    #        use_unicode=False,
+    #    )
+    # dbpool=adbapi.ConnectionPool('MySQLdb',**dbparams)
+    # return cls(dbpool)
 
     def process_item(self, item, spider):
-        query=self.dbpool.runInteraction(self._conditional_insert,item)
-        query.addErrback(self._handle_error,item,spider)
-        return item
+        #query=self.dbpool.runInteraction(self._conditional_insert,item)
+        #query.addErrback(self._handle_error,item,spider)
+        dbObject = dbhandle()
+	cursor = dbObject.cursor()
+	sql = 'insert into page(title,keyword) values(%s,%s)'
+	try:
+	 cursor.execute(sql,(item['title'],item['h1']))
+	 dbObject.commit()
+	except Exception,e:
+	 print(e)
+	dbObject.rollback()
 
-    def _conditional_insert(self,tx,item):
-        #print item['name']
-        sql="insert into testpictures(name,url) values(%s,%s)"
-        params=(item["name"],item["url"])
-        tx.execute(sql,params)
 
-    def _handle_error(self, failue, item, spider):
-        print(failue)
+	return item
+
