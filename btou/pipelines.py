@@ -44,7 +44,7 @@ class BtouPipeline(object):
         #query.addErrback(self._handle_error,item,spider)
         dbObject = dbhandle()
 	cursor = dbObject.cursor()
-	sql = 'insert into page(title,keyword) values(%s,%s)'
+	sql = 'insert into page(title,keyword,tid) values(%s,%s,1)'
 	try:
 	 cursor.execute(sql,(item['title'],item['h1']))
 	 dbObject.commit()
