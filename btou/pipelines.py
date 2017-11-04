@@ -46,8 +46,9 @@ class BtouPipeline(object):
 	cursor = dbObject.cursor()
 	sql = 'insert into page(title,keyword,tid) values(%s,%s,1)'
 	try:
-	 cursor.execute(sql,(item['title'],item['h1']))
-	 dbObject.commit()
+	 pass
+	 #cursor.execute(sql,(item['title'],item['h1']))
+	 #dbObject.commit()
 	except Exception,e:
 	 print(e)
 	dbObject.rollback()

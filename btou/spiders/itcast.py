@@ -3,10 +3,23 @@ from scrapy.contrib.spiders import CrawlSpider,Rule
 from btou.items import ItcastItem
 class ItcastSpider(CrawlSpider):
    name = "itcast"
+   parsexx = 'xx' 
+   def __init__(self,category=None):
+    super(ItcastSpider,self).__init__()
+    print("kumanxuan")
+    print(category)
+    #self.allowed_domains = ["itcast.cn"]
+    #self.start_urls = ["http://www.itcast.cn/"]
+    #rules = [Rule(LinkExtractor(allow=r"/subject/*"),'parse_item')]
+    #	print(category)
+    #print("kumanxuan")
+#	self.parsexx=category 
+
    allowed_domains = ["itcast.cn"]
    start_urls = ["http://www.itcast.cn/"]
-   rules = [Rule(LinkExtractor(allow=r"/subject/*"),'parse_item')]
- 
+   rules = [Rule(LinkExtractor(allow=r"/subject/*"),'parse_item')]   
+   print(parsexx)
+
    def parse_item(self,response):
 
 	 title = response.xpath("//title")
