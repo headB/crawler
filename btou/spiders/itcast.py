@@ -1,33 +1,24 @@
-from scrapy.contrib.linkextractors import LinkExtractor
-from scrapy.contrib.spiders import CrawlSpider,Rule
+from scrapy.linkextractors import LinkExtractor
+from scrapy.spiders import CrawlSpider,Rule
 from btou.items import ItcastItem
 class ItcastSpider(CrawlSpider):
    name = "itcast"
-   url = 'xx' 
-   def __init__(self,url=None):
-    super(ItcastSpider,self).__init__()
-    print(self.url)
-    print("kumanxuan")
-    self.url=url
-    print(self.url)
-    print("this is new ???")
-    print(self.url)
-    #self.allowed_domains = ["itcast.cn"]
-    #self.start_urls = ["http://www.itcast.cn/"]
+   siteUrl = 'xx'
+    
+
+   def __init__(self,category=None,*args,**kwargs):
+    print("not want to print me ????")
+    print(category)
+    self.rules = [Rule(LinkExtractor(allow=r"/%s" %category),'parse_item')]
+    print(self.siteUrl)
+    super(ItcastSpider,self).__init__(*args,**kwargs)
     #rules = [Rule(LinkExtractor(allow=r"/subject/*"),'parse_item')]
-    #	print(category)
-    #print("kumanxuan")
-#	self.parsexx=category 
-
-   #allowed_domains = ["itcast.cn"]
-   
-   start_urls = ["http://www.itcast.cn/"]
-   rules = [Rule(LinkExtractor(allow=r"/subject/*"),'parse_item')]   
-   print("this is new url or not??")
-   print(url)
-
+    self.start_urls = ["http://www.itcast.cn/","http://www.520it.com"]
+    print("guess who print first")
+    #self.rules = [Rule(LinkExtractor(allow=r"/subject/*"),'parse_item')]
+   print("run me first please!!")   
    def parse_item(self,response):
-
+	 
 	 title = response.xpath("//title")
 	 items = ItcastItem()
 	 items['title'] = title.xpath('text()').extract()
