@@ -44,11 +44,11 @@ class BtouPipeline(object):
         #query.addErrback(self._handle_error,item,spider)
         dbObject = dbhandle()
 	cursor = dbObject.cursor()
-	sql = 'insert into page(title,keyword,tid) values(%s,%s,1)'
+	sql = 'insert into page(title,keyword,tid,h2) values(%s,%s,1,%s)'
 	try:
-	 pass
-	 #cursor.execute(sql,(item['title'],item['h1']))
-	 #dbObject.commit()
+	 #pass
+	 cursor.execute(sql,(item['title'],item['h1'],item['h2']))
+	 dbObject.commit()
 	except Exception,e:
 	 print(e)
 	dbObject.rollback()
